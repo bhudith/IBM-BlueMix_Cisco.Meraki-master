@@ -1,0 +1,4 @@
+{
+  "gender" : ["Male", "Female", "Unknown"],
+  "data" : [180, 150, 60]
+}

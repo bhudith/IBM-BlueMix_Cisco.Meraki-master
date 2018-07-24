@@ -1,0 +1,7 @@
+{
+ "labels" : ["< 1 hr", "1 - 2 hrs", "2 - 3 hrs", "> 4 hrs"],
+ "series" : ["Duration"],
+ "data" : [
+     [50, 80, 40, 10]
+ ]
+}

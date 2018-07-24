@@ -1,0 +1,26 @@
+{
+  "name": "NodejsStarterApp",
+  "version": "0.0.1",
+  "description": "A sample nodejs app for Bluemix",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "angular-ui-grid": "3.0.6",
+    "body-parser": "1.12.4",
+    "cfenv": "1.0.x",
+    "express": "4.12.x",
+    "method-override": "2.3.3",
+    "mongodb": "2.0.33",
+    "mongoose": "4.0.0",
+    "multiparty": "4.1.2",
+    "node-restful": "0.2.2",
+    "mongoose-auto-increment" : "4.0.0" ,
+    "multer": "1.0.x",
+	"sendgrid": "^1.9.2"
+  },
+  "repository": {},
+  "engines": {
+    "node": "0.12.x"
+  }
+}

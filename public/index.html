@@ -1,0 +1,756 @@
+<html ng-app='app'>
+
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/angular-chart.css">
+<!-- Bootstrap -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+
+<link rel="stylesheet"
+	href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Angular Material Dependencies
+
+<!-- Angular UI Grid -->
+<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-animate.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-touch.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-aria.min.js"></script>
+<script src="http://ui-grid.info/docs/grunt-scripts/csv.js"></script>
+<script src="http://ui-grid.info/docs/grunt-scripts/pdfmake.js"></script>
+<script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script>
+<script src="http://ui-grid.info/release/ui-grid.js"></script>
+<link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css">
+
+<script	src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>
+<script src="js/Chart.min.js"></script>
+<script src="js/angular-chart.min.js"></script>
+<script src="js/ui-bootstrap-custom-0.13.4.min.js"></script>
+<script src="js/appDashboard.js"></script>
+<script src="js/appCampaign.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="js/preview-img.js"></script>
+
+<script src="js/preview-email.js"></script>
+<script src="js/ng-file-upload.min.js"></script>
+
+<link rel="stylesheet" href="stylesheet/styles.css">
+
+<link rel="stylesheet"
+	href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.indigo-pink.min.css">
+<script
+	src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<!-- Test upload file -->
+
+<!--[if lt IE 9]>
+          <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+</head>
+
+<body>
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+		<header class="mdl-layout__header">
+			<div class="mdl-layout__header-row">
+				<!-- Title -->
+				<span class="mdl-layout-title">CISCO Meraki</span>
+			</div>
+			<!-- Tabs -->
+			<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+				<a href="#scroll-tab-1" class="mdl-layout__tab is-active">Dashboard</a>
+				<a href="#scroll-tab-2" class="mdl-layout__tab">Campaign</a>
+			</div>
+
+
+		</header>
+		<main class="mdl-layout__content">
+		<section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+
+			<div layout="column" style="padding-bottom: 15px;">
+
+				<md-toolbar class="md-accent">
+				<div class="md-toolbar-tools" layout="row"
+					style="width: 100%; display: inline">
+					<section class="mdl-grid section--center">
+						<table
+							style="width: 100%; margin-top: 0px; border: 0px; cell-spacing: 0px; cell-padding: 0px">
+							<tr>
+								<td valign="top">
+									<!-- start div-reportBy  -->
+									<div ng-controller="ButtonsReportByCtrl"
+										ng-click="changeViewType()" id="ButtonsReportBy"
+										style="width: 325px;" align="left">
+
+										<div class="btn-group" id="btnRadioReportBy">
+											<label class="btn btn-primary" ng-model="radioModel"
+												btn-radio="'hourly'">&nbsp;&nbsp;&nbsp;Hourly&nbsp;&nbsp;&nbsp;</label>
+											<label class="btn btn-primary" ng-model="radioModel"
+												btn-radio="'daily'">&nbsp;&nbsp;&nbsp;Day of
+												Week&nbsp;&nbsp;&nbsp;</label> <label class="btn btn-primary"
+												ng-model="radioModel" btn-radio="'monthly'">&nbsp;&nbsp;&nbsp;Monthly&nbsp;&nbsp;&nbsp;</label>
+										</div>
+
+									</div> <!-- end div-reportBy  -->
+								</td>
+								<td valign="top" align="right">
+									<!-- start div-selectSite  -->
+									<div ng-controller="DropdownSiteController" id="DropdownSite">
+
+										<div style="height: 50px;">
+											<md-select placeholder="All Sites" ng-model="selectedSite"
+												ng-change="generateAllChart()" md-on-open="loadSites()"
+												style="min-width: 200px; "> <md-option
+												ng-value="selectedSite" ng-repeat="selectedSite in sites">{{selectedSite.name}}</md-option>
+											</md-select>
+
+										</div>
+									</div> <!-- end div-selectSite  -->
+								</td>
+							</tr>
+						</table>
+						<div style="width: 100%; display: inline-block;"></div>
+					</section>
+
+
+
+
+				</div>
+				</md-toolbar>
+				<md-content layout-padding style="height: 600px;padding: 24px;">
+
+
+
+
+
+
+				<!-- -----------------------###################################################------------------------------------ -->
+				<div id="DashMessageChaeckData" style="display: none;">
+					<section class="mdl-grid section--center">
+						<div class="mdl-cell mdl-cell--12-col"
+							ng-controller='DashMsgCheckDataController' id="DashMsgCheckData">
+							<div class="chartBoxNodata">
+								<center>
+									<h3>{{ message }}</h3>
+								</center>
+							</div>
+						</div>
+					</section>
+				</div>
+				<div id="viewBySite" style="display: none;">
+					<div id="sectionViewBySiteMain">
+						<section class="mdl-grid section--center"
+							id="sectionViewBySiteMain">
+
+							<div class="mdl-cell mdl-cell--4-col"
+								ng-controller='DashPieAvgUsersController' id="DashPieAvgUsers">
+								<div class="chartBox">
+									<div class="mdl-card__title">
+										<h4>Avg Users</h4>
+									</div>
+
+									<canvas id="pieGenderUsers" class="chart chart-pie"
+										chart-data="data" chart-labels="labels" chart-legend="legend"></canvas>
+
+								</div>
+							</div>
+
+							<div class="mdl-cell mdl-cell--4-col"
+								ng-controller='DashPieDevicesController' id="DashPieDevices">
+								<div class="chartBox">
+									<div class="mdl-card__title">
+										<h4>Device</h4>
+									</div>
+									<canvas id="pieGenderUsers" class="chart chart-pie"
+										chart-data="data" chart-labels="labels" chart-legend="legend"></canvas>
+
+								</div>
+							</div>
+
+							<div class="mdl-cell mdl-cell--4-col"
+								ng-controller='DashPeakHourVisitorController'
+								id="DashPeakHourVisitor">
+								<div class="chartBoxPeakHour">
+									<div class="mdl-card__title--center">
+										<h4>Peak Hour Visitor</h4>
+									</div>
+									<br>
+									<center>
+										<h4>{{ data }}</h4>
+									</center>
+
+								</div>
+							</div>
+
+						</section>
+						<hr>
+						<section class="mdl-grid section--center">
+							<div class="mdl-cell mdl-cell--8-col"
+								ng-controller='DashLineVisitorController' id="DashLineVisitor">
+								<div class="chartBoxBarPadding">
+									<canvas id="lineVisitor" class="chart chart-line"
+										chart-data="data" chart-labels="labels" chart-legend="true"
+										chart-series="series" chart-click="onClick">
+								</canvas>
+								</div>
+							</div>
+						</section>
+						<br>
+						<hr>
+					</div>
+					<div id="sectionViewBySiteDetail" style="display: none;">
+						<section class="mdl-grid section--center">
+							<div class="mdl-cell mdl-cell--4-col"
+								ng-controller='DashPieGenderUserController'
+								id="DashPieGenderUser">
+								<div class="chartBox">
+									<div class="mdl-card__title">
+										<h4>Gender Users</h4>
+									</div>
+									<canvas id="pieGenderUsers" class="chart chart-pie"
+										chart-data="data" chart-labels="labels" chart-legend="legend"></canvas>
+
+								</div>
+							</div>
+
+							<div class="mdl-cell mdl-cell--4-col"
+								ng-controller='DashPieAgeController' id="DashPieAge">
+								<div class="chartBox">
+									<div class="mdl-card__title">
+										<h4>Age</h4>
+									</div>
+									<canvas id="pieAge" class="chart chart-pie" chart-data="data"
+										chart-labels="labels" chart-legend="legend"></canvas>
+
+								</div>
+							</div>
+
+							<div class="mdl-cell mdl-cell--4-col"
+								ng-controller='DashPieLoyaltyController' id="DashPieLoyalty">
+								<div class="chartBox">
+									<div class="mdl-card__title">
+										<h4>Loyalty</h4>
+									</div>
+									<canvas id="pieLoyalty" class="chart chart-pie"
+										chart-data="data" chart-labels="labels" chart-legend="legend"
+										chart-series="series"></canvas>
+
+								</div>
+							</div>
+						</section>
+
+
+						<br>
+						<hr>
+						<section class="mdl-grid section--center">
+							<div class="mdl-cell mdl-cell--6-col"
+								ng-controller='DashBarLoyaltyController' id="DashBarLoyalty">
+								<div class="chartBoxBarPadding">
+									<div class="mdl-card__title">
+										<h4>Loyalty</h4>
+									</div>
+
+									<canvas id="dashBarLoyalty" class="chart chart-bar"
+										chart-data="data" chart-labels="labels" chart-legend="legend"
+										chart-series="series"></canvas>
+								</div>
+							</div>
+							<div class="mdl-cell mdl-cell--6-col"
+								ng-controller='DashBarDurationController' id="DashBarDuration">
+								<div class="chartBoxBarPadding">
+									<div class="mdl-card__title">
+										<h4>Duration</h4>
+									</div>
+
+									<canvas id="dashBarDuration" class="chart chart-bar"
+										chart-data="data" chart-labels="labels" chart-legend="legend"
+										chart-series="series"></canvas>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+				<!--  #### View All Sites -->
+				<div id="viewAllSite">
+					<div id="sectionViewByAllSiteMain">
+						<section class="mdl-grid section--center">
+							<div class="mdl-cell mdl-cell--6-col"
+								ng-controller='DashBarLoyaltyAllSitesController'
+								id="DashBarLoyaltyAllSites">
+								<div class="chartBoxBarPadding">
+									<div class="mdl-card__title">
+										<h4>Loyalty</h4>
+									</div>
+
+									<canvas id="dashBarLoyaltyBySite" class="chart chart-bar"
+										chart-data="data" chart-labels="labels" chart-legend="legend"
+										chart-series="series"></canvas>
+								</div>
+							</div>
+							<div class="mdl-cell mdl-cell--6-col"
+								ng-controller='DashBarAgeAllSitesController'
+								id="DashBarAgeAllSites">
+								<div class="chartBoxBarPadding">
+									<div class="mdl-card__title">
+										<h4>Age</h4>
+									</div>
+
+									<canvas id="barAge" class="chart chart-bar" chart-data="data"
+										chart-labels="labels" chart-legend="legend"
+										chart-series="series"></canvas>
+								</div>
+							</div>
+						</section>
+						<br>
+						<hr>
+
+						<section class="mdl-grid section--center">
+
+							<div class="mdl-cell mdl-cell--4-col"
+								ng-controller='DashLineVisitorAllSiteController'
+								id="DashLinePasserVisitorAllSites">
+								<div class="chartBoxBarPadding">
+									<div class="mdl-card__title">
+										<h4></h4>
+									</div>
+
+									<canvas id="linePasserVisitor2" class="chart chart-line"
+										chart-data="data" chart-labels="labels" chart-legend="true"
+										chart-series="series" chart-click="onClick">
+								</canvas>
+
+
+								</div>
+
+							</div>
+							<div class="mdl-cell mdl-cell--4-col"
+								ng-controller='DashPieGenderController' id="DashPieGender">
+								<div class="chartBox">
+									<div class="mdl-card__title">
+										<h4>Gender</h4>
+									</div>
+									<canvas id="pieGender" class="chart chart-pie"
+										chart-data="data" chart-labels="labels" chart-legend="legend"></canvas>
+
+								</div>
+							</div>
+							<div class="mdl-cell mdl-cell--4-col"
+								ng-controller='DashPieVisitorsAllSitesController'
+								id="DashPieVisitors">
+								<div class="chartBox">
+									<div class="mdl-card__title">
+										<h4>Visitors</h4>
+									</div>
+									<canvas id="pieVisitors" class="chart chart-pie"
+										chart-data="data" chart-labels="labels" chart-legend="legend"
+										chart-series="series"></canvas>
+
+								</div>
+							</div>
+						</section>
+
+						<br>
+						<hr>
+					</div>
+					<div id="sectionViewByAllSiteDetail" style="display: none;">
+						<section class="mdl-grid section--center">
+
+							<div class="mdl-cell mdl-cell--6-col"
+								ng-controller='DashBarVisitorsStatusAllSitesController'
+								id="DashBarVisitorsStatusAllSites">
+								<div class="chartBoxBarPadding">
+									<div class="mdl-card__title">
+										<h4>Visitors</h4>
+									</div>
+
+									<canvas id="barVisitorsBySiteStatus" class="chart chart-bar"
+										chart-data="data" chart-labels="labels" chart-legend="legend"
+										chart-series="series"></canvas>
+								</div>
+							</div>
+
+							<div class="mdl-cell mdl-cell--6-col"
+								ng-controller='DashBarLoyaltyVisitorAllSitesController'
+								id="DashBarLoyaltyVisitorAllSites">
+								<div class="chartBoxBarPadding">
+									<div class="mdl-card__title">
+										<h4>Loyalty</h4>
+									</div>
+
+									<canvas id="barLoyaltyBySite2" class="chart chart-bar"
+										chart-data="data" chart-labels="labels" chart-legend="legend"
+										chart-series="series"></canvas>
+								</div>
+							</div>
+
+						</section>
+						<br>
+						<hr>
+
+						<section class="mdl-grid section--center">
+							<div class="mdl-cell mdl-cell--6-col"
+								ng-controller='DashPieNewVisitorsController'
+								id="DashPieNewVisitors">
+								<div class="chartBox">
+									<div class="mdl-card__title">
+										<h4>New Visitors</h4>
+									</div>
+									<canvas id="pieNewVisitors" class="chart chart-pie"
+										chart-data="data" chart-labels="labels" chart-legend="legend"
+										chart-series="series"></canvas>
+
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+				<!-- ############################################################ -->
+				</md-content>
+			</div>
+
+		</section>
+<!-- ############################################################ 
+        CAMPAIGN DASHBOARD
+ ############################################################ -->
+
+		<section class="mdl-layout__tab-panel" id="scroll-tab-2">
+			<md-content layout-padding style="height: 600px;padding: 24px;" ng-show="false">
+			<div ng-controller="MainCtrl">
+				<p>
+					<strong>Grid with native pagination controls</strong>
+				</p>
+				<div ui-grid="gridOptions1" ui-grid-pagination class="grid"></div>
+				<br />
+				<br />
+				<p>
+					<strong>Grid pagination controlled via the API</strong>
+				</p>
+				<div ui-grid="gridOptions2" ui-grid-pagination class="grid"></div>
+				<p>Current page: {{ gridApi2.pagination.getPage() }} of {{
+					gridApi2.pagination.getTotalPages() }}</p>
+				<button type="button" class="btn btn-success"
+					ng-click="gridApi2.pagination.previousPage()">previous
+					page</button>
+				<button type="button" class="btn btn-success"
+					ng-click="gridApi2.pagination.nextPage()">next page</button>
+				<button type="button" class="btn btn-success"
+					ng-click="gridApi2.pagination.seek(3)">go to page 3</button>
+			</div>
+			</md-content>
+			<div class="page-content">
+			
+			
+				<div id="CampaignDashboardList"
+					ng-controller="CampaignDashboardListCtrl" ng-show="false">
+
+					<div>
+						<button type="button" class="btn btn-success"
+							ng-click="toggleMultiSelect()">Toggle multiSelect</button>
+						<strong>MultiSelect:</strong> <span
+							ng-bind="gridApi.grid.options.multiSelect"></span>
+						<button type="button" class="btn btn-success"
+							ng-click="toggleRow1()">Toggle Row 0</button>
+						<br /> <br />
+						<button type="button" class="btn btn-success"
+							ng-click="toggleModifierKeysToMultiSelect()">Toggle
+							modifierKeysToMultiSelect</button>
+						<strong>ModifierKeysToMultiSelect:</strong> <span
+							ng-bind="gridApi.grid.options.modifierKeysToMultiSelect">
+						</span> <br /> <br />
+						<button type="button" class="btn btn-success"
+							ng-disabled="!gridApi.grid.options.multiSelect"
+							ng-click="selectAll()">Select All</button>
+						<button type="button" class="btn btn-success"
+							ng-click="clearAll()">Clear All</button>
+						<button type="button" class="btn btn-success"
+							ng-click="setSelectable()">Set Selectable</button>
+						<button type="button" class="btn btn-success"
+							ng-click="toggleFullRowSelection()">Toggle full row
+							selection</button>
+						<br />
+
+						<div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+					</div>
+					<!-- 
+					<div ng-controller="SecondCtrl">
+						Single selection grid without rowHeader, and allowing rowSelection
+						to be toggled on and off dynamically: <br />
+						<button type="button" class="btn btn-success"
+							ng-click="toggleRowSelection()">Toggle rowSelection</button>
+						<strong>rowSelection:</strong> <span
+							ng-bind="gridApi.grid.options.enableRowSelection"></span>
+						<div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+					</div>
+					 -->
+
+				</div>
+				
+				<div ng-controller='DashBoardController' >
+					<section class="mdl-grid section--center--campaign" ng-show='showDashBoardValue'>
+					    <div class="mdl-cell mdl-cell--8-col"></div>
+					    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell mdl-cell--2-col" ng-click='addCampaign();'>
+					        Add</button>
+					    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell mdl-cell--2-col" ng-click='deleteCampaign();'>
+					        Delete</button>
+					    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+					        <thead>
+					            <tr>
+					                <th class="mdl-data-table__cell--non-numeric">Campaign</th>
+					                <th class="mdl-data-table__cell--non-numeric">Percentage of Response Campaign</th>
+					            </tr>
+					        </thead>
+					        <tbody>
+					            <tr ng-repeat="campaign in campaigns track by campaign._id">
+					                <td class="mdl-data-table__cell--non-numeric">
+					                    <div class="checkbox">
+					                        <label>
+					                            <input type="checkbox" ng-change='selectCampaign(campaign._id)' ng-model="campaign.isCheck"/>
+					                            <a href="#" ng-click="getCampaign(campaign._id)">{{campaign.name}}</a>
+					                        </label>
+					                    </div>
+					                </td>
+					                <td class="mdl-data-table__cell--non-numeric">
+					                    <div class="mdl-progress mdl-js-progress is-upgraded" style="width: 250px" data-upgraded=",MaterialProgress" ng-click="loadData(campaign.id)">
+					                        <div class="progressbar bar bar1" style="height:20px; width: {{campaign.progress}}"></div>
+					                        <div class="bufferbar bar bar2" style="height:20px; width: 100%;"></div>
+					                        <div class="auxbar bar bar3" style="height:20px; width: 0%;"></div>
+					                    </div><br>{{campaign.progress}}%
+					                </td>
+					            </tr>
+					        </tbody>
+					    </table>
+					</section>
+					<div id="sectionChartByCampaign" ng-show='showChartByCampaignValue'>
+
+						<section class="mdl-grid section--center">
+							<div class="mdl-cell mdl-cell--12-col">
+								<h4>
+									<button
+							class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+							ng-click='doClickListCampaigns()'>
+							Back</button>&nbsp;&nbsp;
+									{{campaignName}}
+								</h4>
+							</div>
+							<div class="mdl-cell mdl-cell--6-col">
+								<div class="chartBox">
+									<div class="mdl-card__title">
+										<h4>Age</h4>
+									</div>
+
+									<canvas id="pie" class="chart chart-pie" chart-data="age.data"
+										chart-labels="age.labels" chart-legend="true"
+										chart-options="age.options"></canvas>
+
+								</div>
+							</div>
+							<div class="mdl-cell mdl-cell--6-col">
+								<div class="chartBox">
+									<div class="mdl-card__title">
+										<h4>
+											Gender
+											</h4>
+									</div>
+									<canvas id="pie" class="chart chart-pie"
+										chart-data="gender.data" chart-labels="gender.labels"
+										chart-legend="true" chart-options="gender.options"></canvas>
+								</div>
+							</div>
+						</section>
+						<section class="mdl-grid section--center">
+						
+							<div class="mdl-cell mdl-cell--12-col">
+
+								<div class="chartBoxBarPadding">
+									<div class="mdl-card__title">
+										<h4>Number of Response Campaign</h4>
+									</div>
+
+									<canvas id="lineCampaignResponse" class="chart chart-line"
+										chart-data="visitor.data" chart-labels="visitor.labels"
+										chart-legend="true" chart-series="visitor.series"
+										chart-click="onClick">
+                            </canvas>
+								</div>
+							</div>
+						</section>
+					</div>
+					<section class="mdl-grid section--center--campaign" ng-show="showFormValue">
+    <div class="mdl-cell mdl-cell--12-col" ng-show='isNewCampaignForm'>
+        <h4>New Campaign</h4>
+    </div>
+    <div class="mdl-cell mdl-cell--12-col" ng-show='isNewCampaignForm==false'>
+        <h4>Edit Campaign</h4>
+    </div>
+    <span class="mdl-grid section--center--campaign" style="-webkit-border-radius: 10px;-moz-border-radius: 10px;border-radius: 10px;border:1px solid #C7C7C7;background-color:#FFFFFF; padding:15px;">
+					<div
+						class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+						<input class="mdl-textfield__input" type="text" id="name" ng-model='campaign.name'/> <label
+							class="mdl-textfield__label" for="name">Campaign Name</label>
+					</div>
+					<div class="mdl-cell mdl-cell--1-col mdl-typography--text-right">
+						<h6>Period</h6>
+					</div>
+					<div
+						class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col" id="dateFrom">
+						<input class="mdl-textfield__input" type="date"
+							pattern="-?[0-9]*(\.[0-9]+)?" id="periodFrom" ng-model='campaign.period.from' /> <label
+							class="mdl-textfield__label" for="periodFrom">From</label> <span
+							class="mdl-textfield__error">Input is not a number!</span>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col" id="dateTo">
+        <input class="mdl-textfield__input" type="date" pattern="-?[0-9]*(\.[0-9]+)?" id="periodTo" ng-model='campaign.period.to' />
+        <label class="mdl-textfield__label" for="periodTo">To</label> <span class="mdl-textfield__error">Input is not a number!</span>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col"></div>
+    <div class="mdl-cell mdl-cell--1-col mdl-typography--text-right">
+        <h6>Gender</h6>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="campaign.gender.male" /> Male
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="campaign.gender.female" /> Female
+            </label>
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col mdl-typography--text-right">
+        <h6>Age</h6>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col">
+        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="agefrom" ng-model='campaign.age.from' />
+        <label class="mdl-textfield__label" for="agefrom">From</label> <span class="mdl-textfield__error">Input is not a number!</span>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col">
+        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="ageto" ng-model='campaign.age.to' />
+        <label class="mdl-textfield__label" for="ageto">To</label> <span class="mdl-textfield__error">Input is not a number!</span>
+    </div>
+    <div class="mdl-cell mdl-cell--2-col mdl-typography--text-right">
+        <h6>Last Seen</h6>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="number" id="lastseen" value="30" min="1" ng-model='campaign.lastseen' />
+            <label class="mdl-textfield__label" for="lastseen">Day</label>
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+        <h6>Repeat Visit within 90 days</h6>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col">
+        <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="number" id="repeatvisit" min="1" max="5" ng-model='campaign.repeatvisit' />
+            <label class="mdl-textfield__label" for="repeatvisit"></label>
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--12-col">
+        <h5>Type</h5>
+    </div>
+    <div class="mdl-cell mdl-cell--2-col">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model='campaign.sms.enable' /> SMS
+            </label>
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--10-col">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+            <textarea class="mdl-textfield__input" type="text" id="name" ng-model='campaign.sms.messagetemplate'></textarea>
+            <label class="mdl-textfield__label" for="name">Message Template
+            </label>
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--2-col">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model='campaign.email.enable' /> Email
+            </label>
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--10-col">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+            <input class="mdl-textfield__input" type="text" id="emailSubject" ng-model='campaign.email.subject' />
+            <label class="mdl-textfield__label" for="emailSubject">Subject</label>
+        </div>
+        <div class="mdl-cell mdl-cell--2-col">
+            <h6>Banner</h6>
+        </div>
+        <div class="mdl-cell mdl-cell--10-col">
+            <input id="fileUpload" type="file" multiple ngf-select="upload($file)" />
+        </div>
+        <div id="image-holder"></div>
+        <div ng-show='isEditedImage'>
+            <img ng-src="../{{campaign.imagePath}}"></img>
+        </div>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+        <textarea class="mdl-textfield__input" type="text" id="emailBody" rows="3" ng-model='campaign.email.body'></textarea>
+        <label class="mdl-textfield__label" for="emailBody">Body</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+        <textarea class="mdl-textfield__input" type="text" id="emailFooter" rows="3" ng-model='campaign.email.footer'></textarea>
+        <label class="mdl-textfield__label" for="emailFooter">Footer</label>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col">
+    </div>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell mdl-cell--2-col" ng-click="showFormValue=false; showDashBoardValue=false; showPreview=true;" onclick="previewEmail();">Preview</button>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell mdl-cell--2-col" ng-click='createCampaign();' ng-show='isNewCampaignForm'>
+        Save
+    </button>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell mdl-cell--2-col" ng-click='updateCampaign();' ng-show='isNewCampaignForm==false'>
+        Save
+    </button>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell mdl-cell--2-col" ng-click='doClickBtnCancel()'>
+        Cancel</button>
+    </span>
+    <div class="mdl-cell mdl-cell--3-col"></div>
+</section>
+<section class="mdl-grid section--center--campaign" ng-show="showPreview">
+    <div class="mdl-cell mdl-cell--12-col">
+        <h4> Preview Email Template </h4>
+<span class="mdl-grid section--center" style="-webkit-border-radius: 10px;-moz-border-radius: 10px;border-radius: 10px;border:1px solid #C7C7C7;background-color:#FFFFFF; padding:15px;">
+        <div class="mdl-cell mdl-cell--12-col">
+            <h5 id="preview-emailSubject"></h5>
+        </div>
+        <div class="mdl-cell mdl-cell--12-col" style="word-wrap: break-word;" id="image-holder-preview" ng-show='isEditedImage==false'>
+        </div>
+        <div ng-show='isEditedImage'>
+            <img ng-src="../{{campaign.imagePath}}"></img>
+        </div>
+        <div class="mdl-cell mdl-cell--12-col" style="word-wrap: break-word;" id="preview-emailBody">
+        </div>
+        <div class="mdl-cell mdl-cell--12-col" style="word-wrap: break-word;" id="preview-emailFooter">
+        </div>
+        <div class="mdl-cell mdl-cell--5-col"></div>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell mdl-cell--2-col" ng-click='showPreview=false; showFormValue=true; showDashBoardValue=false'>
+            Close
+        </button>
+        <div class="mdl-cell mdl-cell--5-col"></div>
+        </span>
+
+    </div>
+</section>
+
+
+			
+	</div>
+		</section>
+	</div>
+	</div>
+	</section>
+	</main>
+	</div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+{
+   "devices": ["iPhone", "iPad", "Nexus", "Samsung"],
+   "data" : [180, 50, 10, 150]
+}

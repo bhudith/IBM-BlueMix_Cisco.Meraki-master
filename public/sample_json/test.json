@@ -1,0 +1,8 @@
+{
+"sites":[
+    {"id":"all", "name":"All Site"}, 
+    {"id":"site1", "name":"Site 1"}, 
+    {"id":"site2", "name":"Site 2"}, 
+    {"id":"site3", "name":"Site 3"}
+]
+}

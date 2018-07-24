@@ -1,0 +1,8 @@
+{
+ "labels" : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+  "series" : ["Passer", "Visitors"],
+  "data" : [
+    [320, 220, 190, 170, 150, 230, 290],
+    [28, 48, 40, 19, 86, 27, 90]
+  ]
+}

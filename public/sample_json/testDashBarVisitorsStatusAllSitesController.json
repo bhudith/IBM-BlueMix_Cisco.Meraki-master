@@ -1,0 +1,8 @@
+{
+ "labels" : ["Site A", "Site B", "Site C", "Site D"],
+ "series" : ["Connected", "Not Connected"],
+ "data" : [
+		    [40, 50, 80, 10],
+		    [50, 70, 90, 20]
+		  ]
+}

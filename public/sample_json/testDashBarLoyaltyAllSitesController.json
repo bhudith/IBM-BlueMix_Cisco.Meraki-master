@@ -1,0 +1,11 @@
+{
+ "labels" : ["New", "Repeat"],
+ "series" : ["Site A", "Site B", "Site D", "Site E"],
+ "data" : [
+		    [40, 60],
+		    [60, 100],
+		    [50, 70],
+		    [40, 150]
+		  ]
+
+}

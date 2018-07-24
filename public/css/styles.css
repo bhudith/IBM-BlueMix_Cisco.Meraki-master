@@ -1,0 +1,379 @@
+/* style.css
+ * This file provides css styles.
+ */
+
+body,html {
+	background-color: #3b4b54; width : 100%;
+	height: 100%;
+	margin: 0 auto;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	color: #ffffff;
+}
+
+a {
+	text-decoration: none;
+	color: #00aed1;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.newappIcon {
+	padding-top: 10%;
+	display: block;
+	margin: 0 auto;
+	padding-bottom: 2em;
+	max-width:200px;
+}
+
+h1 {
+	font-weight: bold;
+	font-size: 2em;
+}
+
+.leftHalf {
+	float: left;
+	background-color: #26343f;
+	width: 45%;
+	height: 100%;
+}
+
+.rightHalf {
+	float: right;
+	width: 55%;
+	background-color: #313f4a;
+	height: 100%;
+	overflow:auto;
+}
+
+.blue {
+	color: #00aed1;
+}
+
+
+table {
+	table-layout: fixed;
+	width: 800px;
+	margin: 0 auto;
+	word-wrap: break-word;
+	padding-top:10%;
+}
+
+th {
+	border-bottom: 1px solid #000;
+}
+
+th, td {
+	text-align: left;
+	padding: 2px 20px;
+}
+
+.env-var {
+	text-align: right;
+	border-right: 1px solid #000;
+	width: 30%;
+}
+
+pre {
+	padding: 0;
+	margin: 0;
+}
+
+.container {
+  margin: 50px auto;
+  width: 500px;
+  text-align: center;
+
+
+   >.dropdown {
+    margin: 0 20px;
+    vertical-align: middle;
+  }
+}
+
+.containerCondition{
+	
+	width: 100%;
+}
+
+.containerFilter {
+  margin: 50px auto;
+  width: 500px;
+  text-align: center;
+
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2),  
+                0 1px 1px rgba(0, 0, 0, .2),
+                0 3px 0 #fff,
+                0 4px 0 rgba(0, 0, 0, .2),
+                0 6px 0 #fff,  
+                0 7px 0 rgba(0, 0, 0, .2);
+
+   >.dropdown {
+    margin: 0 20px;
+    vertical-align: middle;
+  }
+}
+
+.dropdown {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  height: 35px;
+  width: 150px;
+  background: #f2f2f2;
+  border: 1px solid;
+  border-color: white #f7f7f7 #f5f5f5;
+  border-radius: 8px;
+  @include linear-gradient(top, transparent, rgba(black, .06));
+  @include box-shadow(0 1px 1px rgba(black, .08));
+
+  &:before, &:after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    top: 9px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 4px dashed;
+    border-color: #888 transparent;
+    pointer-events: none;
+  }
+
+  &:before {
+    border-bottom-style: solid;
+    border-top: none;
+  }
+
+  &:after {
+    margin-top: 7px;
+    border-top-style: solid;
+    border-bottom: none;
+  }
+}
+
+.dropdown-select {
+  position: relative;
+  width: 130%;
+  margin: 0;
+  padding: 6px 8px 6px 10px;
+  height: 35px;
+  line-height: 14px;
+ 
+  color: #62717a;
+  text-shadow: 0 1px white;
+  /* Fallback for IE 8 */
+  background: #f2f2f2;
+  /* "transparent" doesn't work with Opera */
+  background: rgba(black, 0) !important;
+  border: 0;
+  border-radius: 0;
+  -webkit-appearance: none;
+
+  &:focus {
+    z-index: 3;
+    width: 100%;
+    color: #394349;
+    outline: 2px solid #49aff2;
+    outline: 2px solid -webkit-focus-ring-color;
+    outline-offset: -2px;
+  }
+
+  > option {
+    margin: 3px;
+    padding: 6px 8px;
+    text-shadow: none;
+    background: #f2f2f2;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+}
+
+.chartBoxNoData {
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px#888;
+	box-shadow: 0 0 5px #888;
+	
+	
+	border-radius: 13px 13px 13px 13px;
+	-moz-border-radius: 13px 13px 13px 13px;
+	-webkit-border-radius: 13px 13px 13px 13px;
+	border: 0px solid #000000;
+	text-align:center;
+	padding-top:20px;
+	padding-bottom:20px;
+}
+.chartBox {
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px#888;
+	box-shadow: 0 0 5px #888;
+	
+	
+	border-radius: 13px 13px 13px 13px;
+	-moz-border-radius: 13px 13px 13px 13px;
+	-webkit-border-radius: 13px 13px 13px 13px;
+	border: 0px solid #000000;
+}
+
+.chartBoxBarPadding {
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px#888;
+	box-shadow: 0 0 5px #888;
+	padding: 20px;
+	
+	border-radius: 13px 13px 13px 13px;
+	-moz-border-radius: 13px 13px 13px 13px;
+	-webkit-border-radius: 13px 13px 13px 13px;
+	border: 0px solid #000000;
+}
+
+.chartBoxPeakHour {
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px#888;
+	box-shadow: 0 0 5px #888;
+	padding: 40px;
+	
+	border-radius: 13px 13px 13px 13px;
+	-moz-border-radius: 13px 13px 13px 13px;
+	-webkit-border-radius: 13px 13px 13px 13px;
+	border: 0px solid #000000;
+}
+
+#labelSelectSite {padding-left : 10px;float:left;display:inline-block;}
+#DropdownSite{
+overflow: auto;
+text-align: right; 
+text-valign: top;
+margin-top: 0px;
+margin-right: 10px;
+position: absolute;  
+right: 0;  
+top: 0;
+}
+#ButtonsReportBy{
+	margin-top: 8px;
+	height: 30px;
+	width: 316px;
+	boder: 0x;
+	text-align: center; 
+}
+#btnRadioReportBy {
+	
+
+}
+
+
+/*-------------------------
+	Dropbox Element
+--------------------------*/
+
+#dropbox{
+	background:url('/images/background_tile_3.jpg');
+
+	border-radius:3px;
+	position: relative;
+	margin:80px auto 90px;
+	min-height: 290px;
+	overflow: hidden;
+	padding-bottom: 40px;
+    width: 990px;
+
+	box-shadow:0 0 4px rgba(0,0,0,0.3) inset,0 -3px 2px rgba(0,0,0,0.1);
+}
+
+#dropbox .message{
+	font-size: 11px;
+    text-align: center;
+    padding-top:160px;
+    display: block;
+}
+
+#dropbox .message i{
+	color:#ccc;
+	font-size:10px;
+}
+
+#dropbox:before{
+	border-radius:3px 3px 0 0;
+}
+
+/*-------------------------
+	Image Previews
+--------------------------*/
+
+#dropbox .preview{
+	width:245px;
+	height: 215px;
+	float:left;
+	margin: 55px 0 0 60px;
+	position: relative;
+	text-align: center;
+}
+
+#dropbox .preview img{
+	max-width: 240px;
+	max-height:180px;
+	border:3px solid #fff;
+	display: block;
+
+	box-shadow:0 0 2px #000;
+}
+
+#dropbox .imageHolder{
+	display: inline-block;
+	position:relative;
+}
+
+#dropbox .uploaded{
+	position: absolute;
+	top:0;
+	left:0;
+	height:100%;
+	width:100%;
+	background: url('/images/done.png') no-repeat center center rgba(255,255,255,0.5);
+	display: none;
+}
+
+#dropbox .preview.done .uploaded{
+	display: block;
+}
+
+/*-------------------------
+	Progress Bars
+--------------------------*/
+
+#dropbox .progressHolder{
+	position: absolute;
+	background-color:#252f38;
+	height:12px;
+	width:100%;
+	left:0;
+	bottom: 0;
+
+	box-shadow:0 0 2px #000;
+}
+
+#dropbox .progress{
+	background-color:#2586d0;
+	position: absolute;
+	height:100%;
+	left:0;
+	width:0;
+
+	box-shadow: 0 0 1px rgba(255, 255, 255, 0.4) inset;
+
+	-moz-transition:0.25s;
+	-webkit-transition:0.25s;
+	-o-transition:0.25s;
+	transition:0.25s;
+}
+
+#dropbox .preview.done .progress{
+	width:100% !important;
+}
+
+.grid {
+  width: 100%;
+ 
+}

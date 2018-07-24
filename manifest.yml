@@ -1,0 +1,11 @@
+applications:
+- services:
+  - SendGrid-h7
+  - MongoLab-cj
+  disk_quota: 1024M
+  host: cisco-meraki
+  name: Cisco Meraki
+  path: .
+  domain: mybluemix.net
+  instances: 1
+  memory: 256M
